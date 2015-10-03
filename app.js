@@ -31,6 +31,7 @@ if (Meteor.isServer) {
 
       Pot.insert({
         balance: 0,
+        previousBalance: 0,
         current: true
       });
 
@@ -67,24 +68,41 @@ Router.map(function () {
 
         if (body.auth === Meteor.settings.auth) {
 
-          var potBalance = Pot.findOne({current: true}).balance;
+          var pot = Pot.findOne({current: true});
+          var newBalance;
 
-          if (body.hasOwnProperty('balance')) {
+          if (pot && body.hasOwnProperty('balance')) {
 
-            // Add the received balance to the pot balance
-            potBalance += Number(body.balance);
+            if (body.balance <= pot.previousBalance) {
 
+              // If the recieved balance is less than the current balance
+              // add the received balance to the pot balance
+              newBalance = pot.balance + Number(body.balance);
+
+            } else {
+
+              // If the received balance is greater than the current balance
+              // find the difference between the received balance and the
+              // previous balance, then add that
+              newBalance = pot.balance + (body.balance - pot.previousBalance);
+
+            }
+
+            // Update the Pot in the db with the new balance,
+            // as well as the previous balance received in the request
             Pot.update({
               current: true
             }, {
               $set: {
-                balance: potBalance
+                balance: newBalance,
+                previousBalance: body.balance
               }
             });
 
+            // Return a 201, along with the new balance
             httpStatus = 201;
             response = {
-              balance: potBalance
+              balance: newBalance
             };
 
           } else {
