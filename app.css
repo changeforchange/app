@@ -1,1 +1,115 @@
-/* CSS declarations go here */
+body {
+  font-family: "Lato" sans-serif;
+  margin: 0px;
+  padding: 0px;
+  background-color: #ecf0f1;
+  color: #2c3e50; }
+
+#charities {
+  width: calc(100% - 300px);
+  margin: 0px;
+  height: 100vh;
+  position: absolute;
+  top: 0px;
+  left: 0px; }
+  #charities #searched-charities {
+    height: 50vh; }
+  #charities #local-charities {
+    height: 50vh; }
+  #charities #charities-title {
+    width: 100%;
+    margin-top: 10px;
+    display: inline-block; }
+    #charities #charities-title h1 {
+      text-align: center; }
+  #charities .charity {
+    width: 30%;
+    margin: 0px 10px;
+    display: inline-table;
+    position: relative;
+    background-color: white;
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75); }
+    #charities .charity .charity-title {
+      height: 80px;
+      font-size: 21px;
+      background-color: #1abc9c;
+      color: #ecf0f1;
+      text-align: center;
+      padding: 5px 10px 0px 5px; }
+    #charities .charity .charity-description {
+      height: 180px;
+      padding: 10px;
+      font-size: 14px;
+      overflow: hidden; }
+
+#about {
+  width: 300px;
+  margin: 0px;
+  height: 100vh;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  border-left: 3px solid rgba(44, 62, 80, 0.1);
+  background-color: #1abc9c;
+  color: #ecf0f1; }
+  #about #name {
+    height: 180px;
+    display: inline-block;
+    margin: 10px;
+    border-bottom: 3px solid rgba(44, 62, 80, 0.1); }
+    #about #name h1 {
+      margin-top: 20px;
+      margin-bottom: 30px; }
+    #about #name .product-name {
+      display: inline-block; }
+      #about #name .product-name#name-1 {
+        width: calc(100% - 40px);
+        margin-left: 40px;
+        text-align: left; }
+      #about #name .product-name#name-2 {
+        width: 100%;
+        text-align: center; }
+      #about #name .product-name#name-3 {
+        width: calc(100% - 40px);
+        margin-right: 40px;
+        text-align: right; }
+  #about #instructions {
+    height: calc(100vh - 180px - 180px); }
+    #about #instructions h2 {
+      text-align: center;
+      font-weight: 300;
+      font-size: 32px;
+      display: inline-block;
+      width: 100%;
+      text-align: center; }
+    #about #instructions .instruction {
+      list-style: none;
+      margin: 0px;
+      padding: 0px;
+      display: inline-block;
+      width: 100%;
+      text-align: center;
+      font-size: 21px;
+      font-weight: 300; }
+      #about #instructions .instruction h4 {
+        display: block;
+        font-weight: 300;
+        margin: 20px 0px 4px 0px;
+        font-size: 28px; }
+  #about #pot {
+    height: auto;
+    margin: 10px;
+    border-top: 3px solid rgba(44, 62, 80, 0.1);
+    font-weight: 300; }
+    #about #pot #pot-title {
+      height: 30px;
+      text-align: center;
+      font-size: 24px;
+      margin: 10px 0px; }
+    #about #pot #pot-balance {
+      text-align: center;
+      font-size: 64px; }
+
+/*# sourceMappingURL=app.css.map */

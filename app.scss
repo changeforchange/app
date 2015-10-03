@@ -1,0 +1,174 @@
+$highlight-color: #1abc9c;
+$light-color: #ecf0f1;
+$dark-color: #2c3e50;
+$about-width: 300px;
+$wide-border: 3px solid rgba($dark-color, 0.1);
+
+
+body {
+  font-family: "Lato" sans-serif;
+  margin: 0px;
+  padding: 0px;
+  background-color: $light-color;
+  color: $dark-color;
+}
+
+#charities {
+  width: calc(100% - #{$about-width});
+  margin: 0px;
+  height: 100vh;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+
+  #searched-charities {
+    height: 50vh;
+    // padding: 20px 0px;
+  }
+
+  #local-charities {
+    height: 50vh;
+    // padding: 20px 0px;
+  }
+
+  #charities-title {
+    width: 100%;
+    margin-top: 10px;
+    display: inline-block;
+    h1 {
+      text-align: center;
+    }
+  }
+
+  .charity {
+    width: 30%;
+    margin: 0px 10px;
+    display: inline-table;
+    position: relative;
+    background-color: white;
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+
+    .charity-title {
+      height: 80px;
+      font-size: 21px;
+      background-color: $highlight-color;
+      color: $light-color;
+      text-align: center;
+      padding: 5px 10px 0px 5px;
+    }
+
+    .charity-description {
+      height: 180px;
+      padding: 10px;
+      font-size: 14px;
+      overflow: hidden;
+    }
+
+  }
+
+}
+
+#about {
+
+  $name-height: 180px;
+  $pot-height: 180px;
+
+  width: $about-width;
+  margin: 0px;
+  height: 100vh;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  border-left: $wide-border;
+  background-color: $highlight-color;
+  color: $light-color;
+
+  #name {
+    height: $name-height;
+    display: inline-block;
+    margin: 10px;
+    border-bottom: $wide-border;
+
+    h1 {
+      margin-top: 20px;
+      margin-bottom: 30px;
+    }
+
+    .product-name {
+      $overlap-factor: 40px;
+      display: inline-block;
+      &#name-1 {
+        width: calc(100% - #{$overlap-factor});
+        margin-left: $overlap-factor;
+        text-align: left;
+      }
+
+      &#name-2 {
+        width: 100%;
+        text-align: center;
+      }
+
+      &#name-3 {
+        width: calc(100% - #{$overlap-factor});
+        margin-right: $overlap-factor;
+        text-align: right;
+      }
+
+    }
+
+  }
+
+  #instructions {
+    height: calc(100vh - #{$pot-height} - #{$name-height});
+
+    h2 {
+      text-align: center;
+      font-weight: 300;
+      font-size: 32px;
+      display: inline-block;
+      width: 100%;
+      text-align: center;
+    }
+
+    .instruction {
+      list-style: none;
+      margin: 0px;
+      padding: 0px;
+      display: inline-block;
+      width: 100%;
+      text-align: center;
+      font-size: 21px;
+      font-weight: 300;
+      h4 {
+        display: block;
+        font-weight: 300;
+        margin: 20px 0px 4px 0px;
+        font-size: 28px;
+      }
+    }
+
+  }
+
+  #pot {
+    height: auto;
+    margin: 10px;
+    border-top: $wide-border;
+    font-weight: 300;
+
+    #pot-title {
+      height: 30px;
+      text-align: center;
+      font-size: 24px;
+      margin: 10px 0px;
+    }
+
+    #pot-balance {
+      text-align: center;
+      font-size: 64px;
+    }
+
+  }
+
+}

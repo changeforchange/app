@@ -1,3 +1,5 @@
 .meteor/local
 .meteor/meteorite
 config.json
+.sass-cache/
+app.css.map

@@ -4,18 +4,84 @@ Credit = new Mongo.Collection('credit'); // Credit entries
 if (Meteor.isClient) {
 
   Meteor.subscribe('pot');
+  Meteor.subscribe('credit');
 
   Template.main.helpers({
+
     currentBalance: function() {
 
       // Get the current balance from the pot
-      var balance = Pot.findOne({current: true}).balance;
+      var pot = Pot.findOne({current: true});
 
       // Return the balance (pence) formatted in pounds
-      return (balance / 100).toFixed(2);
+      return pot ? (pot.balance / 100).toFixed(2) : 0.00;
 
-    }
+    },
+
+    recentCredits: function() {
+
+      return Credit.find();
+
+    },
+
+    charities: function() {
+
+      return Session.get('charities');
+
+    },
+
+    localCharities: function() {
+console.log('');
+console.log('Meteor.public.settings: ', Meteor.settings.public);
+console.log('');
+
+      return Meteor.settings.public.localCharities;
+    },
+
   });
+
+  Template.main.events({
+
+    'keydown input#search': function(event, template) {
+
+      if (event.which === 13) {
+
+        var input = template.find('#search');
+        var query = input.value;
+
+        HTTP.call(
+          'GET',
+          'https://api.justgiving.com/' + Meteor.settings.jgAPI + '/v1/onesearch?i=charity&limit=3&q=' + query,
+          {
+            content: 'application/json',
+            headers: {
+              accept: 'application/json'
+            }
+          },
+          function(err, res) {
+
+            if (err) {
+              console.log('Error querying Just Giving: ', err);
+              return;
+            }
+
+            var results = JSON.parse(res.content).GroupedResults[0];
+
+            var charities = results ? results.Results : [];
+
+            Session.set('charities', charities);
+
+            input.setSelectionRange(0, input.value.length);
+
+          }
+
+        );
+
+      }
+    }
+
+  });
+
 
 }
 
@@ -45,6 +111,41 @@ if (Meteor.isServer) {
     return Pot.find({current: true});
   });
 
+  Meteor.publish('credit', function() {
+    return Credit.find({}, {sort: {timestamp: -1}, limit: 5});
+  });
+
+  Meteor.methods({
+
+    searchCharities: function(query) {
+
+      // HTTP.call(
+      //   'GET',
+      //   'https://api.justgiving.com/' + Meteor.settings.jgAPI + '/v1/onesearch?q=' + query,
+      //   {
+      //     content: 'application/json',
+      //     headers: {
+      //       accept: 'application/json'
+      //     }
+      //   },
+      //   function(err, res) {
+      //
+      //     if (err) {
+      //       console.log('Error querying Just Giving: ', err);
+      //       return;
+      //     }
+      //
+      //     var results = JSON.parse(res.content).GroupedResults[0];
+      //
+      //     Session.set('charities', results);
+      //
+      //   }
+      // );
+
+    }
+
+  });
+
 }
 
 Router.route('/', function () {
@@ -60,7 +161,7 @@ Router.route('/', function () {
 });
 
 Router.map(function () {
-  this.route('change', {path: '/change/',
+  this.route('credit', {path: '/credit/',
     where: 'server',
     action: function(){
 
@@ -69,8 +170,7 @@ Router.map(function () {
         // If we receive a POST
 
         var body = this.request.body;
-        var response;
-        var httpStatus;
+        var response, httpStatus;
 
         if (body.auth === Meteor.settings.auth) {
 
@@ -78,24 +178,26 @@ Router.map(function () {
 
           // Get the current pot
           var pot = Pot.findOne({current: true});
-          var newBalance;
+          var newBalance, addedBalance;
 
           if (pot && body.hasOwnProperty('balance')) {
 
-            if (body.balance <= pot.previousBalance) {
+            if (body.balance >= 0 && body.balance <= pot.previousBalance) {
 
               // If the recieved balance is less than the current balance
               // add the received balance to the pot balance
-              newBalance = pot.balance + Number(body.balance);
+              addedBalance = Number(body.balance);
 
             } else {
 
               // If the received balance is greater than the current balance
               // find the difference between the received balance and the
               // previous balance, then add that
-              newBalance = pot.balance + (body.balance - pot.previousBalance);
+              addedBalance = (body.balance - pot.previousBalance);
 
             }
+
+            newBalance = pot.balance + addedBalance;
 
             // Update the Pot in the db with the new balance,
             // as well as the previous balance received in the request
@@ -106,6 +208,11 @@ Router.map(function () {
                 balance: newBalance,
                 previousBalance: body.balance
               }
+            });
+
+            Credit.insert({
+              balance: addedBalance,
+              timestamp: Math.floor(new Date().getTime() / 1000) // Current timestamp in seconds
             });
 
             // Return a 201, along with the new balance
