@@ -1,12 +1,15 @@
-Pot = new Mongo.Collection('summary');
+Pot = new Mongo.Collection('summary'); // Single summary object
+Credit = new Mongo.Collection('credit'); // Credit entries
 
 if (Meteor.isClient) {
 
   Template.main.helpers({
     currentBalance: function() {
 
+      // Get the current balance from the pot
       var balance = Pot.findOne({current: true}).balance;
 
+      // Return the balance (pence) formatted in pounds
       return (balance / 100).toFixed(2);
 
     }
@@ -14,14 +17,11 @@ if (Meteor.isClient) {
 
 }
 
-
 if (Meteor.isServer) {
 
   Meteor.startup(function () {
 
-    var potCount = Pot.find().count();
-
-    if (potCount !== 1) {
+    if (Pot.find().count() !== 1) {
 
       // If we don't have a pot, create one,
       // or if we have more than one remove all documents
@@ -68,6 +68,9 @@ Router.map(function () {
 
         if (body.auth === Meteor.settings.auth) {
 
+          // If the recieved auth matches our auth
+
+          // Get the current pot
           var pot = Pot.findOne({current: true});
           var newBalance;
 
@@ -124,6 +127,8 @@ Router.map(function () {
 
         } else {
 
+          // If the received auth doesn't match our auth
+
           httpStatus = 401;
           response = {
             errors: [
@@ -136,11 +141,14 @@ Router.map(function () {
 
         }
 
+
+        // Write the response code and headers
         this.response.writeHead(httpStatus, {
           'Content-Type': 'application/json',
           'Access-Control-Allow-Origin': '*'
         });
 
+        // Send the stringified response
         this.response.end(JSON.stringify(response));
 
       }
