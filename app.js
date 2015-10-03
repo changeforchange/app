@@ -3,6 +3,8 @@ Credit = new Mongo.Collection('credit'); // Credit entries
 
 if (Meteor.isClient) {
 
+  Meteor.subscribe('pot');
+
   Template.main.helpers({
     currentBalance: function() {
 
@@ -37,6 +39,10 @@ if (Meteor.isServer) {
 
     }
 
+  });
+
+  Meteor.publish('pot', function() {
+    return Pot.find({current: true});
   });
 
 }
@@ -124,7 +130,6 @@ Router.map(function () {
 
           }
 
-
         } else {
 
           // If the received auth doesn't match our auth
@@ -140,7 +145,6 @@ Router.map(function () {
           };
 
         }
-
 
         // Write the response code and headers
         this.response.writeHead(httpStatus, {
