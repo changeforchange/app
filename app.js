@@ -36,6 +36,19 @@ if (Meteor.isClient) {
 
   });
 
+  Meteor.autosubscribe(function() {
+    Pot.find().observe({
+      added: function() {
+
+        if (Pot.findOne().balance === 0) {
+          sweetAlert('Thanks!', 'Your donation has been sent!', 'success');
+        }
+
+      }
+    });
+  });
+
+
   Template.main.events({
 
     'keydown input#search': function(event, template) {
@@ -79,6 +92,86 @@ if (Meteor.isClient) {
 
   });
 
+  Template.charity.events({
+    'click .donate': function() {
+
+      var pot = Pot.findOne({current: true});
+
+      var amount = (pot.balance / 100).toFixed(2);
+
+      var charityId = this.Id;
+
+      if (amount < 2) {
+        sweetAlert('Hang on', 'You can\'t donate less than £2', 'info');
+      } else {
+
+        sweetAlert({
+          title: 'Donate £' + amount + ' to ' + this.Name + '?',
+          type: 'info',
+          showCancelButton: true,
+          cancelButtonText: 'Close',
+          confirmButtonText: 'Donate!',
+          closeOnConfirm: true
+        }, function(isConfirm) {
+
+          if (isConfirm) {
+            Meteor.call('donate', charityId, amount);
+          }
+
+        });
+
+      }
+
+    },
+    'click .info': function() {
+
+      sweetAlert({
+        title: this.Name,
+        text: this.Description,
+        type: 'info',
+        showCancelButton: true,
+        cancelButtonText: 'Close',
+        confirmButtonText: 'Donate!',
+        closeOnConfirm: true
+      }, function(isConfirm) {
+
+        if (isConfirm) {
+
+          var pot = Pot.findOne({current: true});
+
+          var amount = (pot.balance / 100).toFixed(2);
+          var charityId = this.Id;
+
+          if (amount < 2) {
+            sweetAlert('Hang on', 'You can\'t donate less than £2', 'info');
+          } else {
+
+            sweetAlert({
+              title: 'Donate £' + amount + ' to ' + this.Name + '?',
+              type: 'info',
+              showCancelButton: true,
+              cancelButtonText: 'Close',
+              confirmButtonText: 'Donate!',
+              closeOnConfirm: true
+            }, function(isConfirm) {
+
+              if (isConfirm) {
+                Meteor.call('donate', charityId, amount);
+              }
+
+            });
+
+          }
+
+          return;
+
+        }
+
+      });
+
+    },
+  });
+
 
 }
 
@@ -102,17 +195,6 @@ if (Meteor.isServer) {
 
     }
 
-    var sys = Npm.require('sys');
-    var exec = Npm.require('child_process').exec;
-
-    var child = exec("pwd", function (error, stdout, stderr) {
-      sys.print('stdout: ' + stdout);
-      sys.print('stderr: ' + stderr);
-      if (error !== null) {
-        console.log('exec error: ' + error);
-      }
-    });
-
   });
 
   Meteor.publish('pot', function() {
@@ -122,6 +204,47 @@ if (Meteor.isServer) {
   Meteor.publish('credit', function() {
     return Credit.find({}, {sort: {timestamp: -1}, limit: 5});
   });
+
+  Meteor.methods({
+    donate: function(charityId, amount) {
+
+      var sys = Npm.require('sys');
+      var exec = Npm.require('child_process').exec;
+
+      var path = '/Users/joshfarrant/Projects/hackference/justgiving-donate/donate.js';
+
+      var command = 'casperjs '+path+' --charity="'+charityId+'" --amount="'+amount+'"';
+      console.log('Donating...');
+
+      console.log('');
+      console.log('command: ', command);
+      console.log('');
+
+      exec(command, function (error, stdout, stderr) {
+
+        console.log(stdout);
+        console.log(stderr);
+
+        if (error) {
+          console.log('exec error: ' + error);
+          return;
+        } else {
+          console.log('Donation successful');
+        }
+
+      });
+
+      Pot.remove({});
+
+      Pot.insert({
+        balance: 0,
+        previousBalance: 0,
+        current: true
+      });
+
+    }
+  });
+
 
 }
 

@@ -3,3 +3,4 @@
 config.json
 .sass-cache/
 app.css.map
+.DS_Store

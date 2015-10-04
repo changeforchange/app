@@ -19,9 +19,12 @@
       </span>
 
       {{#if charities}}
-        {{#each charities}}
-          {{> charity}}
-        {{/each}}
+        <div class="charity-container">
+
+          {{#each charities}}
+            {{> charity}}
+          {{/each}}
+        </div>
       {{/if}}
 
     </div>
@@ -34,10 +37,12 @@
         <h1>Pick a Local Charity</h1>
       </span>
 
-      {{#each localCharities}}
-        {{> charity}}
-      {{/each}}
+      <div class="charity-container">
 
+        {{#each localCharities}}
+          {{> charity}}
+        {{/each}}
+      </div>
     </div>
 
   </div>
@@ -87,7 +92,7 @@
     </div>
 
     <div class="charity-actions">
-      <span class="action-button">Info</span><span class="action-button">Donate</span>
+      <span class="action-button info">Info</span><span class="action-button donate">Donate</span>
     </div>
 
   </div>
