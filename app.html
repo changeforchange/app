@@ -1,5 +1,5 @@
 <head>
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,300' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Lato:600,400,300' rel='stylesheet' type='text/css'>
   <title>Change For Change</title>
 </head>
 
@@ -13,10 +13,9 @@
 
     <div id="searched-charities">
 
-      <input id="search">
-
       <span id="charities-title">
-        <h1>Search for a Charity</h1>
+        <h1>Search for a Charity </h1>
+        <input id="search" class="pulse">
       </span>
 
       {{#if charities}}
@@ -26,6 +25,8 @@
       {{/if}}
 
     </div>
+
+    <h1 id="or">- or -</h1>
 
     <div id="local-charities">
 
@@ -83,8 +84,8 @@
       <span>{{Name}}</span>
     </div>
 
-    <div class="charity-description">
-      {{Description}}
+    <div class="charity-actions">
+      <span class="action-button">Info</span><span class="action-button">Donate</span>
     </div>
 
   </div>

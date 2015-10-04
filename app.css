@@ -5,6 +5,25 @@ body {
   background-color: #ecf0f1;
   color: #2c3e50; }
 
+#search::selection {
+  background: rgba(26, 188, 156, 0.5); }
+
+#search::-moz-selection {
+  background: rgba(26, 188, 156, 0.5); }
+
+#search {
+  position: absolute;
+  font-size: 32px;
+  right: 25px;
+  top: 30px;
+  height: 39px;
+  width: 200px;
+  box-shadow: none;
+  border: none;
+  outline: none;
+  background-color: white;
+  border-radius: 3px; }
+
 #charities {
   width: calc(100% - 300px);
   margin: 0px;
@@ -12,10 +31,17 @@ body {
   position: absolute;
   top: 0px;
   left: 0px; }
+  #charities #or {
+    margin: 0px;
+    text-align: center;
+    opacity: 0.3;
+    line-height: 40px; }
   #charities #searched-charities {
-    height: 50vh; }
+    height: calc(50vh - 20px); }
   #charities #local-charities {
-    height: 50vh; }
+    height: calc(50vh - 20px); }
+    #charities #local-charities h1 {
+      margin-top: 0px; }
   #charities #charities-title {
     width: 100%;
     margin-top: 10px;
@@ -28,9 +54,9 @@ body {
     display: inline-table;
     position: relative;
     background-color: white;
-    -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
-    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75); }
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.55);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.55);
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.55); }
     #charities .charity .charity-title {
       height: 80px;
       font-size: 21px;
@@ -38,11 +64,31 @@ body {
       color: #ecf0f1;
       text-align: center;
       padding: 5px 10px 0px 5px; }
-    #charities .charity .charity-description {
-      height: 180px;
-      padding: 10px;
-      font-size: 14px;
-      overflow: hidden; }
+    #charities .charity .charity-actions {
+      height: 60px;
+      font-size: 14px; }
+      #charities .charity .charity-actions .action-button {
+        width: calc(50% - 1px);
+        display: inline-block;
+        line-height: 60px;
+        text-align: center;
+        cursor: pointer;
+        font-size: 18px; }
+        #charities .charity .charity-actions .action-button:hover, #charities .charity .charity-actions .action-button:focus, #charities .charity .charity-actions .action-button:active {
+          color: #1abc9c;
+          -webkit-transition: color 0.2s ease-in-out;
+          -moz-transition: color 0.2s ease-in-out;
+          -ms-transition: color 0.2s ease-in-out;
+          -o-transition: color 0.2s ease-in-out;
+          transition: color 0.2s ease-in-out; }
+        #charities .charity .charity-actions .action-button:first-child {
+          font-weight: 400;
+          border-right: 1px solid rgba(85, 85, 85, 0.3);
+          opacity: 0.7; }
+        #charities .charity .charity-actions .action-button:last-child {
+          font-weight: 600;
+          border-left: 1px solid rgba(85, 85, 85, 0.3);
+          opacity: 0.8; }
 
 #about {
   width: 300px;
@@ -111,5 +157,28 @@ body {
     #about #pot #pot-balance {
       text-align: center;
       font-size: 64px; }
+      #about #pot #pot-balance.pulse {
+        -webkit-animation-name: 'pulse-animation';
+        -webkit-animation-duration: 3000ms;
+        -webkit-transform-origin: center center;
+        -webkit-animation-iteration-count: infinite;
+        -webkit-animation-timing-function: linear; }
+@-webkit-keyframes pulse-animation {
+  0% {
+    -webkit-transform: scale(1); }
+  30% {
+    -webkit-transform: scale(1); }
+  40% {
+    -webkit-transform: scale(1.3); }
+  50% {
+    -webkit-transform: scale(1); }
+  60% {
+    -webkit-transform: scale(1); }
+  70% {
+    -webkit-transform: scale(1.2); }
+  80% {
+    -webkit-transform: scale(1); }
+  100% {
+    -webkit-transform: scale(1); } }
 
 /*# sourceMappingURL=app.css.map */

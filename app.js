@@ -31,12 +31,8 @@ if (Meteor.isClient) {
     },
 
     localCharities: function() {
-console.log('');
-console.log('Meteor.public.settings: ', Meteor.settings.public);
-console.log('');
-
       return Meteor.settings.public.localCharities;
-    },
+    }
 
   });
 
@@ -71,13 +67,14 @@ console.log('');
 
             Session.set('charities', charities);
 
-            input.setSelectionRange(0, input.value.length);
+            input.select();
 
           }
 
         );
 
       }
+
     }
 
   });
@@ -113,37 +110,6 @@ if (Meteor.isServer) {
 
   Meteor.publish('credit', function() {
     return Credit.find({}, {sort: {timestamp: -1}, limit: 5});
-  });
-
-  Meteor.methods({
-
-    searchCharities: function(query) {
-
-      // HTTP.call(
-      //   'GET',
-      //   'https://api.justgiving.com/' + Meteor.settings.jgAPI + '/v1/onesearch?q=' + query,
-      //   {
-      //     content: 'application/json',
-      //     headers: {
-      //       accept: 'application/json'
-      //     }
-      //   },
-      //   function(err, res) {
-      //
-      //     if (err) {
-      //       console.log('Error querying Just Giving: ', err);
-      //       return;
-      //     }
-      //
-      //     var results = JSON.parse(res.content).GroupedResults[0];
-      //
-      //     Session.set('charities', results);
-      //
-      //   }
-      // );
-
-    }
-
   });
 
 }
