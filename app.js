@@ -102,6 +102,17 @@ if (Meteor.isServer) {
 
     }
 
+    var sys = Npm.require('sys');
+    var exec = Npm.require('child_process').exec;
+
+    var child = exec("pwd", function (error, stdout, stderr) {
+      sys.print('stdout: ' + stdout);
+      sys.print('stderr: ' + stderr);
+      if (error !== null) {
+        console.log('exec error: ' + error);
+      }
+    });
+
   });
 
   Meteor.publish('pot', function() {

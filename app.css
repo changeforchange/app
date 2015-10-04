@@ -25,21 +25,18 @@ body {
   border-radius: 3px; }
 
 #charities {
-  width: calc(100% - 300px);
+  width: calc(100%);
   margin: 0px;
-  height: 100vh;
-  position: absolute;
-  top: 0px;
-  left: 0px; }
+  height: calc(100vh - 250px); }
   #charities #or {
     margin: 0px;
     text-align: center;
     opacity: 0.3;
     line-height: 40px; }
   #charities #searched-charities {
-    height: calc(50vh - 20px); }
+    height: calc(50% - 20px); }
   #charities #local-charities {
-    height: calc(50vh - 20px); }
+    height: calc(50% - 20px); }
     #charities #local-charities h1 {
       margin-top: 0px; }
   #charities #charities-title {
@@ -91,23 +88,23 @@ body {
           opacity: 0.8; }
 
 #about {
-  width: 300px;
+  width: 100%;
   margin: 0px;
-  height: 100vh;
-  position: absolute;
+  height: 250px;
   top: 0px;
   right: 0px;
-  border-left: 3px solid rgba(44, 62, 80, 0.1);
   background-color: #1abc9c;
-  color: #ecf0f1; }
+  color: #ecf0f1;
+  position: relative; }
   #about #name {
-    height: 180px;
+    height: 100%;
+    width: 300px;
     display: inline-block;
-    margin: 10px;
-    border-bottom: 3px solid rgba(44, 62, 80, 0.1); }
+    position: absolute;
+    top: 0px;
+    left: 0px; }
     #about #name h1 {
-      margin-top: 20px;
-      margin-bottom: 30px; }
+      margin: 62px 0px; }
     #about #name .product-name {
       display: inline-block; }
       #about #name .product-name#name-1 {
@@ -122,33 +119,44 @@ body {
         margin-right: 40px;
         text-align: right; }
   #about #instructions {
-    height: calc(100vh - 180px - 180px); }
+    width: calc(100% - 600px);
+    display: inline-block;
+    position: absolute;
+    top: 0px;
+    left: 300px; }
     #about #instructions h2 {
       text-align: center;
       font-weight: 300;
       font-size: 32px;
       display: inline-block;
       width: 100%;
-      text-align: center; }
+      text-align: center;
+      margin-bottom: 0px; }
+    #about #instructions .instruction-container {
+      display: block;
+      margin: 0px auto;
+      width: 200px; }
     #about #instructions .instruction {
-      list-style: none;
       margin: 0px;
-      padding: 0px;
+      padding: 10px 0px;
       display: inline-block;
       width: 100%;
       text-align: center;
       font-size: 21px;
-      font-weight: 300; }
+      font-weight: 400; }
       #about #instructions .instruction h4 {
-        display: block;
+        display: inline;
         font-weight: 300;
-        margin: 20px 0px 4px 0px;
         font-size: 28px; }
   #about #pot {
     height: auto;
+    width: 300px;
     margin: 10px;
-    border-top: 3px solid rgba(44, 62, 80, 0.1);
-    font-weight: 300; }
+    font-weight: 300;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    margin-top: 61px; }
     #about #pot #pot-title {
       height: 30px;
       text-align: center;
